@@ -44,3 +44,10 @@ You are now ready to run one of the versions of this program.
 7. Once the program finishes execution, the final report will be visible on the same screen.
 8. Depending on your export options, a report will be extracted into .txt and .md files as well.
 
+## Screenshots and videos:
+![Main Page](https://github.com/saleendude/Automated-Market-Researcher-5103P/assets/35657745/99fe2b9f-aa64-4298-8aea-38e81806766f)
+![Loading Report..](https://github.com/saleendude/Automated-Market-Researcher-5103P/assets/35657745/8f22f3d6-877c-49b1-80a0-4ed7ebc30d17)
+![Report Generated](https://github.com/saleendude/Automated-Market-Researcher-5103P/assets/35657745/9fe2e64d-3955-453d-bfec-a5d86cae3c13)
+
+https://github.com/saleendude/Automated-Market-Researcher-5103P/assets/35657745/ff5785ef-0b36-4097-be05-26a8e5b36fa2
+
