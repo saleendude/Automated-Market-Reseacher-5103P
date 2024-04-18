@@ -379,43 +379,50 @@ def main():
     )
 
     if st.button("Generate Report"):
-        identified_subtopics = generate_subtopics_list(
-            topic_of_interest=topic_of_interest, number_of_subtopics=number_of_subtopics
-        )
-        st.write(f"Subtopics identified: {identified_subtopics}")
-
-        subtopic_analyses = []
-        progress_bar = st.progress(0)
-        progress_step = 100 / (len(identified_subtopics) * (research_depth + 1))
-        progress_value = 0
-
-        for i, subtopic in enumerate(identified_subtopics):
-            st.write(
-                f"Analyzing subtopic {i + 1}/{len(identified_subtopics)}: {subtopic}"
+        try:
+            identified_subtopics = generate_subtopics_list(
+                topic_of_interest=topic_of_interest,
+                number_of_subtopics=number_of_subtopics,
             )
-            detailed_analysis = create_reports_for_subtopics(
-                subtopic=subtopic, research_depth=research_depth
+            st.write(f"Subtopics identified: {identified_subtopics}")
+
+            subtopic_analyses = []
+            progress_bar = st.progress(0)
+            progress_step = 100 / (len(identified_subtopics) * (research_depth + 1))
+            progress_value = 0
+
+            for i, subtopic in enumerate(identified_subtopics):
+                st.write(
+                    f"Analyzing subtopic {i + 1}/{len(identified_subtopics)}: {subtopic}"
+                )
+                detailed_analysis = create_reports_for_subtopics(
+                    subtopic=subtopic, research_depth=research_depth
+                )
+                subtopic_analyses.append(detailed_analysis)
+                progress_value += progress_step
+                progress_bar.progress(int(progress_value))
+
+            overall_detailed_report = compile_overall_report(
+                topic_of_interest, "\n\n".join(subtopic_analyses)
             )
-            subtopic_analyses.append(detailed_analysis)
             progress_value += progress_step
             progress_bar.progress(int(progress_value))
 
-        overall_detailed_report = compile_overall_report(
-            topic_of_interest, "\n\n".join(subtopic_analyses)
-        )
-        progress_value += progress_step
-        progress_bar.progress(int(progress_value))
+            if export_txt:
+                create_txt_file(
+                    topic=topic_of_interest, content=overall_detailed_report
+                )
 
-        if export_txt:
-            create_txt_file(topic=topic_of_interest, content=overall_detailed_report)
+            if export_md:
+                create_markdown_file(
+                    topic=topic_of_interest, content=overall_detailed_report
+                )
 
-        if export_md:
-            create_markdown_file(
-                topic=topic_of_interest, content=overall_detailed_report
-            )
+            st.success("Comprehensive report generated successfully!")
+            st.markdown(overall_detailed_report)
 
-        st.success("Comprehensive report generated successfully!")
-        st.markdown(overall_detailed_report)
+        except Exception as e:
+            st.write(f"Error occurred on backend:\nPossible API endpoint issues\n{e}")
 
 
 if __name__ == "__main__":
